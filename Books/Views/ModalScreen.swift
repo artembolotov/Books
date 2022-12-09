@@ -11,14 +11,14 @@ struct ModalScreen: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State private var text = ""
-    @State var isFirstResponder = true
+    @State var isFirstResponder = false
     
     var body: some View {
         VStack {
             LegacyTextField(text: $text, isFirstResponder: $isFirstResponder, configuration: { textField in
                 textField.borderStyle = .roundedRect
                 textField.clearButtonMode = .always
-                textField.placeholder = "This textfield added via UIViewRepresentable"
+                textField.placeholder = "Added via UIViewRepresentable"
             })
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: 70)
@@ -28,7 +28,13 @@ struct ModalScreen: View {
                 Text("Press to dismiss")
             }
         }
-        .onAppear()
+        .onDisappear() {
+            isFirstResponder = false
+        }
+        
+        .onAppear() {
+            isFirstResponder = true
+        }
     }
 }
 

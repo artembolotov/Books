@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct LinksScreen: View {
+    @EnvironmentObject var modelData: ModelData
+    
+    @Binding var selectedTab: Int
+    @Binding var navigationPath: [Book]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            navigationPath = [modelData.books[90]]
+            selectedTab = 1
+        } label: {
+            Text("Go to Books")
+        }
+
     }
 }
 
 struct QuickAccessScreen_Previews: PreviewProvider {
     static var previews: some View {
-        LinksScreen()
+        LinksScreen(selectedTab: .constant(0), navigationPath: .constant([]))
+            .environmentObject(ModelData())
     }
 }

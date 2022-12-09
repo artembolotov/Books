@@ -10,15 +10,16 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var selectedTab = 0
+    @State private var navigationPath: [Book] = []
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            LinksScreen()
+            LinksScreen(selectedTab: $selectedTab, navigationPath: $navigationPath)
                 .tabItem {
                     Label("Links", systemImage: "arrow.up.right")
                 }
                 .tag(0)
-            BooksScreen()
+            BooksScreen(navigationPath: $navigationPath)
                 .tabItem {
                     Label("Books", systemImage: "books.vertical")
                 }
@@ -28,6 +29,9 @@ struct ContentView: View {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(2)
+        }
+        .onChange(of: navigationPath) { newValue in
+            print("new navigationPath = \(newValue)")
         }
     }
 }

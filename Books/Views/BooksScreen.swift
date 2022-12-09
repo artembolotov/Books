@@ -10,7 +10,8 @@ import SwiftUI
 struct BooksScreen: View {
     
     @EnvironmentObject var modelData: ModelData
-    @State var navigationPath: [Book] = []
+    //@State var navigationPath: [Book] = []
+    @Binding var navigationPath: [Book]
     
     var body: some View {
         if #available(iOS 16, *) {
@@ -49,7 +50,7 @@ struct BooksScreen: View {
 
 struct BooksScreen_Previews: PreviewProvider {
     static var previews: some View {
-        BooksScreen()
+        BooksScreen(navigationPath: .constant([]))
             .environmentObject(ModelData())
     }
 }

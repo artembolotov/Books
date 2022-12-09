@@ -28,11 +28,21 @@ struct LegacyTextField: UIViewRepresentable {
     }
 
     public func updateUIView(_ uiView: UITextField, context: Context) {
-        uiView.text = text
+        if uiView.text != text {
+            uiView.text = text
+        }
+        
         configuration(uiView)
+        
         switch isFirstResponder {
-        case true: uiView.becomeFirstResponder()
-        case false: uiView.resignFirstResponder()
+        case true:
+            if !uiView.isFirstResponder {
+                uiView.becomeFirstResponder()
+            }
+        case false:
+            if uiView.isFirstResponder {
+                uiView.resignFirstResponder()
+            }
         }
     }
 
