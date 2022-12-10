@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BookRow: View {
     var book: Book
+    var simulateArrow: Bool = false
     
     var body: some View {
         HStack {
@@ -20,6 +21,11 @@ struct BookRow: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
+            if simulateArrow {       
+                Image(systemName: "chevron.right")
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .font(Font.system(.footnote).weight(.semibold))
+            }
         }
     }
 }

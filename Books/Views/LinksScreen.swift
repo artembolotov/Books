@@ -12,13 +12,15 @@ struct LinksScreen: View {
     
     @Binding var selectedTab: Int
     @Binding var navigationPath: [Book]
+    @Binding var shouldShowDetail: Bool
     
     var body: some View {
         Button {
             navigationPath = [modelData.books[90]]
+            shouldShowDetail = true
             selectedTab = 1
         } label: {
-            Text("Go to Books")
+            Text("Go to Anna Karenina")
         }
 
     }
@@ -26,7 +28,7 @@ struct LinksScreen: View {
 
 struct QuickAccessScreen_Previews: PreviewProvider {
     static var previews: some View {
-        LinksScreen(selectedTab: .constant(0), navigationPath: .constant([]))
+        LinksScreen(selectedTab: .constant(0), navigationPath: .constant([]), shouldShowDetail: .constant(false))
             .environmentObject(ModelData())
     }
 }

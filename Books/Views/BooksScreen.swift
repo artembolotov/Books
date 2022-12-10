@@ -10,8 +10,12 @@ import SwiftUI
 struct BooksScreen: View {
     
     @EnvironmentObject var modelData: ModelData
-    //@State var navigationPath: [Book] = []
     @Binding var navigationPath: [Book]
+    @Binding var shouldShowDetail: Bool
+    
+    var destinationView: some View {
+        BookDetail(book: navigationPath.first ?? modelData.books[0])
+    }
     
     var body: some View {
         if #available(iOS 16, *) {
@@ -28,15 +32,24 @@ struct BooksScreen: View {
             }
         } else {
             NavigationView {
-                List(modelData.books) { book in
-                    NavigationLink {
-                        BookDetail(book: book)
-                    } label: {
-                        BookRow(book: book)
+                VStack {
+                    NavigationLink(destination: destinationView, isActive: $shouldShowDetail) {
+                        EmptyView()
+                    }
+                    List {
+                        ForEach(modelData.books) { book in
+                            Button {
+                                navigationPath = [book]
+                                shouldShowDetail = true
+                            } label: {
+                                BookRow(book: book, simulateArrow: true)
+                            }
+                        }
                     }
                 }
                 .modifier(NavigationTitle())
             }
+            .navigationViewStyle(.stack)
         }
     }
     
@@ -50,7 +63,7 @@ struct BooksScreen: View {
 
 struct BooksScreen_Previews: PreviewProvider {
     static var previews: some View {
-        BooksScreen(navigationPath: .constant([]))
+        BooksScreen(navigationPath: .constant([]), shouldShowDetail: .constant(false))
             .environmentObject(ModelData())
     }
 }
