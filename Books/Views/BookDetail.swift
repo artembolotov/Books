@@ -11,25 +11,23 @@ struct BookDetail: View {
     var book: Book
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     var body: some View {
-        
         List {
-            if horizontalSizeClass == .compact {
-                Text("compact")
-                VStack {
-                    bookImage
-                    bookHeaderView
-                    bookDetailsView
-                }
-            } else {
-                Text("regular")
+            if verticalSizeClass == .compact {
                 HStack {
                     bookImage
                     VStack {
                         bookHeaderView
                         bookDetailsView
                     }
+                }
+            } else {
+                VStack {
+                    bookImage
+                    bookHeaderView
+                    bookDetailsView
                 }
             }
         }
